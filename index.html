@@ -3,93 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio | sgb-9051</title>
+  <title>sgb-9051 | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f2f5;
-      color: #333;
+      font-family: 'Inter', sans-serif;
+      background: #0e0e10;
+      color: #f5f5f5;
       line-height: 1.6;
     }
+
     header {
-      background: #24292e;
-      color: white;
-      padding: 2rem 1rem;
       text-align: center;
+      padding: 3rem 1rem;
+      background: #1a1a1d;
     }
+
     header h1 {
       font-size: 2.5rem;
+      color: #58a6ff;
     }
+
     header p {
+      color: #aaa;
       margin-top: 0.5rem;
-      color: #ccc;
+      font-size: 1.1rem;
     }
+
     main {
       max-width: 1000px;
       margin: 2rem auto;
       padding: 1rem;
     }
+
     h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #24292e;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.5rem;
     }
+
     .repo-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
     }
+
     .repo-card {
-      background: white;
+      background: #1c1c1f;
+      border: 1px solid #2a2a2e;
       padding: 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
+
     .repo-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border-color: #58a6ff;
+      box-shadow: 0 0 15px rgba(88,166,255,0.3);
     }
+
     .repo-card a {
+      color: #58a6ff;
       text-decoration: none;
-      color: #0366d6;
+      font-weight: 600;
       font-size: 1.1rem;
-      font-weight: bold;
     }
+
     .repo-description {
       margin-top: 0.5rem;
-      color: #555;
+      color: #ccc;
+      font-size: 0.95rem;
     }
+
     footer {
       text-align: center;
       padding: 2rem 1rem;
-      color: #888;
-      background: #fff;
-      margin-top: 2rem;
+      color: #666;
+      background: #1a1a1d;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Hi, I'm sgb-9051 👋</h1>
-    <p>Welcome to my portfolio! Check out my GitHub projects below.</p>
+    <h1>👨‍💻 sgb-9051</h1>
+    <p>Welcome to my portfolio. Explore my GitHub projects below.</p>
   </header>
 
   <main>
-    <h2>My Projects</h2>
+    <h2>🚀 Projects</h2>
     <div id="repo-container" class="repo-container">
-      <!-- Repositories will load here -->
+      <!-- Repositories will be loaded here -->
     </div>
   </main>
 
   <footer>
-    &copy; 2025 sgb-9051 | Built with ❤️ using GitHub Pages
+    &copy; 2025 sgb-9051 • Built with 💻 & GitHub Pages
   </footer>
 
   <script>
@@ -99,19 +124,21 @@
       .then(res => res.json())
       .then(repos => {
         const container = document.getElementById("repo-container");
-        repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // recent first
-        repos.forEach(repo => {
-          const card = document.createElement("div");
-          card.className = "repo-card";
-          card.innerHTML = `
-            <a href="${repo.html_url}" target="_blank">${repo.name}</a>
-            <p class="repo-description">${repo.description || "No description provided."}</p>
-          `;
-          container.appendChild(card);
-        });
+        repos
+          .filter(repo => !repo.fork)
+          .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+          .forEach(repo => {
+            const card = document.createElement("div");
+            card.className = "repo-card";
+            card.innerHTML = `
+              <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+              <p class="repo-description">${repo.description || "No description provided."}</p>
+            `;
+            container.appendChild(card);
+          });
       })
-      .catch(error => {
-        console.error("Error fetching repos:", error);
+      .catch(err => {
+        console.error("Error loading repos:", err);
       });
   </script>
 
