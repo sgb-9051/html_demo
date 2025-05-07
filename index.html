@@ -1,1 +1,93 @@
-<h1>Hello, Github!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My GitHub Repositories</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+      color: #333;
+    }
+    header {
+      background-color: #24292e;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    #repo-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .repo-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .repo-card:hover {
+      transform: translateY(-5px);
+    }
+    .repo-card a {
+      text-decoration: none;
+      color: #0366d6;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    .repo-description {
+      margin-top: 0.5rem;
+      color: #555;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My GitHub Repositories</h1>
+    <p><a href="https://github.com/your-github-username" target="_blank" style="color: #58a6ff;">@your-github-username</a></p>
+  </header>
+
+  <div id="repo-container">
+    <!-- Repositories will be injected here by JavaScript -->
+  </div>
+
+  <footer>
+    &copy; 2025 Your Name | Powered by GitHub Pages
+  </footer>
+
+  <script>
+    const username = "sgb-9051";
+
+    fetch(`https://api.github.com/users/${username}/repos`)
+      .then(res => res.json())
+      .then(repos => {
+        const container = document.getElementById("repo-container");
+        repos.forEach(repo => {
+          const card = document.createElement("div");
+          card.className = "repo-card";
+          card.innerHTML = `
+            <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+            <p class="repo-description">${repo.description || "No description provided."}</p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error("Error fetching repos:", error);
+      });
+  </script>
+</body>
+</html>
