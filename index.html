@@ -3,39 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My GitHub Repositories</title>
+  <title>Portfolio | sgb-9051</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: #f7f7f7;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
       color: #333;
+      line-height: 1.6;
     }
     header {
-      background-color: #24292e;
+      background: #24292e;
       color: white;
-      padding: 1rem;
+      padding: 2rem 1rem;
       text-align: center;
     }
-    h1 {
-      margin: 0;
+    header h1 {
+      font-size: 2.5rem;
     }
-    #repo-container {
+    header p {
+      margin-top: 0.5rem;
+      color: #ccc;
+    }
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #24292e;
+    }
+    .repo-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
-      padding: 2rem;
     }
     .repo-card {
       background: white;
       padding: 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .repo-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
     .repo-card a {
       text-decoration: none;
@@ -49,23 +67,29 @@
     }
     footer {
       text-align: center;
-      padding: 1rem;
+      padding: 2rem 1rem;
       color: #888;
+      background: #fff;
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>My GitHub Repositories</h1>
-    <p><a href="https://github.com/your-github-username" target="_blank" style="color: #58a6ff;">@your-github-username</a></p>
+    <h1>Hi, I'm sgb-9051 👋</h1>
+    <p>Welcome to my portfolio! Check out my GitHub projects below.</p>
   </header>
 
-  <div id="repo-container">
-    <!-- Repositories will be injected here by JavaScript -->
-  </div>
+  <main>
+    <h2>My Projects</h2>
+    <div id="repo-container" class="repo-container">
+      <!-- Repositories will load here -->
+    </div>
+  </main>
 
   <footer>
-    &copy; 2025 Your Name | Powered by GitHub Pages
+    &copy; 2025 sgb-9051 | Built with ❤️ using GitHub Pages
   </footer>
 
   <script>
@@ -75,6 +99,7 @@
       .then(res => res.json())
       .then(repos => {
         const container = document.getElementById("repo-container");
+        repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // recent first
         repos.forEach(repo => {
           const card = document.createElement("div");
           card.className = "repo-card";
@@ -89,5 +114,6 @@
         console.error("Error fetching repos:", error);
       });
   </script>
+
 </body>
 </html>
